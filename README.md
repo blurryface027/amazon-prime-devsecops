@@ -21,7 +21,10 @@ The entire workflow follows GitOps principles where infrastructure changes are d
 
 # 🏗️ Architecture
 
-![Architecture](assets/architecture.png)
+![Architecture](assets/01-architecture.png)
+
+> **Note:** This repository contains the application source code and CI/CD pipeline. Kubernetes manifests and Helm charts used by Argo CD are maintained in a separate GitOps repository:
+> https://github.com/blurryface027/prime-video-gitops
 
 # 🛠️ Tech Stack
 
