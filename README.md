@@ -272,16 +272,38 @@ During this project I gained practical experience with:
 - Image analysis using Docker Scout
 - Monitoring Kubernetes workloads using Prometheus & Grafana
 
-# 🔮 Future Improvements
+# 🔄 GitOps Repository
 
-Possible enhancements include:
+This project follows the **GitOps** deployment model by separating the application source code from the Kubernetes deployment manifests.
 
-- Automated Infrastructure Provisioning using Terraform
-- Slack or Email Deployment Notifications
-- Automated Rollback Strategy
-- Blue-Green or Canary Deployments
-- Automated Backup Strategy
-- Kubernetes Network Policies
+## Repository Structure
+
+### 1. Application Repository
+
+Contains the application source code, Dockerfile, Jenkins pipeline, and CI/CD workflow.
+
+**Repository:**
+https://github.com/blurryface027/amazon-prime-devsecops
+
+### 2. GitOps Repository
+
+Contains the Kubernetes manifests and Helm chart monitored by Argo CD.
+
+**Repository:**
+https://github.com/blurryface027/prime-video-gitops
+
+---
+
+## GitOps Workflow
+
+1. Developer pushes code to the **Application Repository**.
+2. Jenkins executes the CI/CD pipeline.
+3. Docker image is built, scanned, and pushed to Docker Hub.
+4. Jenkins updates the image tag in the **GitOps Repository**.
+5. Argo CD detects the Git commit automatically.
+6. Argo CD synchronizes the updated manifests to the Amazon EKS cluster.
+
+This separation follows GitOps best practices by keeping application source code and Kubernetes deployment manifests in independent repositories.
 
 # 👨‍💻 Author
 
