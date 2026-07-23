@@ -10,6 +10,7 @@ pipeline {
         SCANNER_HOME = tool 'sonar-scanner'
         IMAGE_NAME = "blurryface027/prime-video-devsecops"
         IMAGE_TAG = "${BUILD_NUMBER}"
+        GITOPS_REPO = "https://github.com/blurryface027/prime-video-gitops.git"
     }
 
     stages {
@@ -36,12 +37,12 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonar-server') {
-                    sh '''
-                    $SCANNER_HOME/bin/sonar-scanner \
+                    sh """
+                    ${SCANNER_HOME}/bin/sonar-scanner \
                     -Dsonar.projectKey=Prime-Video-Clone \
                     -Dsonar.projectName=Prime-Video-Clone \
                     -Dsonar.sources=.
-                    '''
+                    """
                 }
             }
         }
@@ -71,18 +72,26 @@ pipeline {
 
         stage('Docker Scout Scan') {
             steps {
-                sh """
-                docker scout quickview ${IMAGE_NAME}:${IMAGE_TAG}
-                docker scout cves ${IMAGE_NAME}:${IMAGE_TAG}
-                """
+                withCredentials([usernamePassword(
+                    credentialsId: 'docker-cred',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh """
+                    echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin
+
+                    docker scout quickview ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker scout cves ${IMAGE_NAME}:${IMAGE_TAG} || true
+
+                    docker logout
+                    """
+                }
             }
         }
 
         stage('Trivy Image Scan') {
             steps {
-                sh """
-                trivy image ${IMAGE_NAME}:${IMAGE_TAG}
-                """
+                sh "trivy image ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
 
@@ -113,22 +122,22 @@ pipeline {
                     passwordVariable: 'GIT_TOKEN'
                 )]) {
                     sh """
-                        rm -rf prime-video-gitops
+                    rm -rf prime-video-gitops
 
-                        git clone https://\$GIT_USER:\$GIT_TOKEN@github.com/blurryface027/prime-video-gitops.git
+                    git clone https://\$GIT_USER:\$GIT_TOKEN@github.com/blurryface027/prime-video-gitops.git
 
-                        cd prime-video-gitops
+                    cd prime-video-gitops
 
-                        sed -i 's/tag:.*/tag: "${IMAGE_TAG}"/' prime-video-chart/values.yaml
+                    sed -i 's/tag:.*/tag: "${IMAGE_TAG}"/' prime-video-chart/values.yaml
 
-                        git config user.name "Jenkins"
-                        git config user.email "jenkins@local"
+                    git config user.name "Jenkins"
+                    git config user.email "jenkins@local"
 
-                        git add .
+                    git add prime-video-chart/values.yaml
 
-                        git diff --cached --quiet || git commit -m "Update image tag to ${IMAGE_TAG}"
+                    git diff --cached --quiet || git commit -m "Update image tag to ${IMAGE_TAG}"
 
-                        git push origin main
+                    git push origin main
                     """
                 }
             }
