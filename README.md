@@ -182,7 +182,7 @@ Prometheus + Grafana
 
 ## Trivy Security Scan
 
-![Trivy](screenshots/04-trivy-scan.png)
+![Trivy](screenshots/trivy.png)
 
 ---
 
@@ -206,13 +206,13 @@ Prometheus + Grafana
 
 ## Grafana Dashboard
 
-![Grafana](screenshots/08-grafana-dashboard.png)
+![Grafana](screenshots/grafana.png)
 
 ---
 
 ## Prometheus Targets
 
-![Prometheus](screenshots/09-prometheus-targets.png)
+![Prometheus](screenshots/prometheus.png)
 
 ---
 
