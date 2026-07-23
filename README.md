@@ -1,70 +1,323 @@
-# Getting Started with Create React App
+# 🚀 End-to-End DevSecOps CI/CD Pipeline for an Amazon Prime Video Clone using GitOps on Amazon EKS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![AWS](https://img.shields.io/badge/AWS-EKS-orange?logo=amazonaws)
+![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red?logo=jenkins)
+![Docker](https://img.shields.io/badge/Docker-Containerization-blue?logo=docker)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Orchestration-326CE5?logo=kubernetes)
+![ArgoCD](https://img.shields.io/badge/ArgoCD-GitOps-EF7B4D?logo=argo)
+![Helm](https://img.shields.io/badge/Helm-Package%20Manager-0F1689?logo=helm)
+![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-E6522C?logo=prometheus)
+![Grafana](https://img.shields.io/badge/Grafana-Visualization-F46800?logo=grafana)
 
-## Available Scripts
+A production-inspired DevSecOps project demonstrating an automated CI/CD pipeline, GitOps deployment strategy, Kubernetes orchestration, and monitoring on **Amazon EKS**.
 
-In the project directory, you can run:
+# 📖 Project Overview
 
-### `npm start`
+This project demonstrates how a modern DevSecOps pipeline can automate application delivery from source code to a production-ready Kubernetes environment.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The application is containerized using Docker, scanned for code quality and security vulnerabilities, pushed to Docker Hub, automatically deployed to Amazon EKS using Argo CD and Helm, and continuously monitored with Prometheus and Grafana.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The entire workflow follows GitOps principles where infrastructure changes are driven through Git repositories instead of manual deployments.
 
-### `npm test`
+# 🏗️ Architecture
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Architecture](assets/architecture.png)
 
-### `npm run build`
+# 🛠️ Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Category | Technology |
+|-----------|------------|
+| Cloud Platform | AWS EC2, Amazon EKS |
+| Source Control | Git, GitHub |
+| CI/CD | Jenkins |
+| Containerization | Docker |
+| Container Registry | Docker Hub |
+| GitOps | Argo CD |
+| Kubernetes | Amazon EKS |
+| Package Manager | Helm |
+| Code Quality | SonarQube |
+| Security Scanning | Trivy, Docker Scout |
+| Monitoring | Prometheus, Grafana |
+| Application | React, Nginx |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# ⚙️ CI/CD & GitOps Workflow
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```text
+Developer
+      │
+      ▼
+GitHub Repository
+      │
+      ▼
+Jenkins Pipeline
+      │
+      ├── SonarQube Analysis
+      ├── Quality Gate
+      ├── Trivy File System Scan
+      ├── Docker Build
+      ├── Docker Scout Scan
+      ├── Trivy Image Scan
+      ├── Docker Push
+      └── Update GitOps Repository
+                  │
+                  ▼
+              Argo CD
+                  │
+                  ▼
+             Amazon EKS
+                  │
+                  ▼
+        Prime Video Application
+                  │
+          ┌───────┴────────┐
+          ▼                ▼
+    Prometheus         Grafana
+```
 
-### `npm run eject`
+# ✨ Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Automated CI/CD Pipeline using Jenkins
+- Static Code Analysis with SonarQube
+- Quality Gate validation before deployment
+- Trivy File System vulnerability scanning
+- Docker Scout image analysis
+- Trivy Container Image scanning
+- Docker image publishing to Docker Hub
+- GitOps deployment using Argo CD
+- Helm-based Kubernetes deployments
+- Amazon EKS orchestration
+- Prometheus metrics collection
+- Grafana dashboards for monitoring
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# 📂 Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```text
+amazon-prime-devsecops
+│
+├── public/
+├── src/
+├── Dockerfile
+├── Jenkinsfile
+├── package.json
+├── package-lock.json
+├── README.md
+└── screenshots/
+    ├── architecture.png
+    ├── jenkins.png
+    ├── sonarqube.png
+    ├── trivy.png
+    ├── dockerhub.png
+    ├── argocd.png
+    ├── grafana.png
+    └── application.png
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# 🚀 Deployment Pipeline
 
-## Learn More
+```text
+Code Commit
+      │
+      ▼
+GitHub Repository
+      │
+      ▼
+Jenkins Pipeline
+      │
+      ▼
+SonarQube Code Analysis
+      │
+      ▼
+Quality Gate
+      │
+      ▼
+Trivy File System Scan
+      │
+      ▼
+Docker Image Build
+      │
+      ▼
+Docker Scout Scan
+      │
+      ▼
+Trivy Image Scan
+      │
+      ▼
+Docker Hub
+      │
+      ▼
+GitOps Repository Update
+      │
+      ▼
+Argo CD Auto Sync
+      │
+      ▼
+Amazon EKS
+      │
+      ▼
+Prime Video Clone
+      │
+      ▼
+Prometheus + Grafana
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# 📸 Project Screenshots
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Architecture
 
-### Code Splitting
+![Architecture](screenshots/01-architecture.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Jenkins Pipeline
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Jenkins](screenshots/02-jenkins-pipeline.png)
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## SonarQube Dashboard
 
-### Advanced Configuration
+![SonarQube](screenshots/03-sonarqube-dashboard.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Trivy Security Scan
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+![Trivy](screenshots/04-trivy-scan.png)
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Docker Hub Repository
+
+![DockerHub](screenshots/05-dockerhub-repository.png)
+
+---
+
+## Argo CD Dashboard
+
+![ArgoCD](screenshots/06-argocd-dashboard.png)
+
+---
+
+## Amazon EKS Cluster
+
+![EKS](screenshots/07-eks-pods.png)
+
+---
+
+## Grafana Dashboard
+
+![Grafana](screenshots/08-grafana-dashboard.png)
+
+---
+
+## Prometheus Targets
+
+![Prometheus](screenshots/09-prometheus-targets.png)
+
+---
+
+## Running Application
+
+![Prime Video](screenshots/10-prime-video-app.png)
+
+# 📈 Monitoring
+
+Monitoring is implemented using **Prometheus** and **Grafana**.
+
+The monitoring stack provides visibility into:
+
+- Kubernetes Cluster Health
+- Worker Node Metrics
+- CPU Utilization
+- Memory Utilization
+- Pod Status
+- Network Usage
+- Storage Usage
+- Container Metrics
+
+Grafana dashboards consume metrics collected by Prometheus, enabling real-time monitoring of the deployed application and Kubernetes cluster.
+
+# 🔒 Security
+
+Security is integrated throughout the CI/CD pipeline.
+
+### SonarQube
+- Static Code Analysis
+- Code Smells Detection
+- Bug Detection
+- Maintainability Analysis
+- Quality Gate Validation
+
+### Trivy
+- Filesystem Vulnerability Scan
+- Docker Image Vulnerability Scan
+
+### Docker Scout
+- Base Image Analysis
+- Package Vulnerability Detection
+- Image Recommendations
+
+# 📚 Key Learning Outcomes
+
+During this project I gained practical experience with:
+
+- Building complete CI/CD pipelines using Jenkins
+- Containerizing applications using Docker
+- Managing container images using Docker Hub
+- Implementing GitOps with Argo CD
+- Deploying applications on Amazon EKS
+- Packaging Kubernetes applications using Helm
+- Performing static code analysis using SonarQube
+- Performing container security scanning using Trivy
+- Image analysis using Docker Scout
+- Monitoring Kubernetes workloads using Prometheus & Grafana
+
+# 🔮 Future Improvements
+
+Possible enhancements include:
+
+- Automated Infrastructure Provisioning using Terraform
+- Slack or Email Deployment Notifications
+- Automated Rollback Strategy
+- Blue-Green or Canary Deployments
+- Automated Backup Strategy
+- Kubernetes Network Policies
+
+# 👨‍💻 Author
+
+**Krishan Mohan Sharma**
+
+GitHub: https://github.com/blurryface027
+
+LinkedIn: https://www.linkedin.com/in/blurryface027/
+
+## 🙏 Acknowledgements
+
+The frontend application used in this project is based on the open-source **Prime Video Clone** created by **Nikhil Manglik**.
+
+**Original Repository:**
+https://github.com/NikhilManglik/Prime-Video-Clone
+
+This repository focuses on implementing a complete **End-to-End DevSecOps, CI/CD, GitOps, Kubernetes, and Monitoring pipeline** around the application, including:
+
+- Jenkins CI/CD Pipeline
+- SonarQube Code Analysis
+- Trivy Security Scanning
+- Docker Scout Image Analysis
+- Docker Image Build & Push
+- Helm Charts
+- Argo CD GitOps Deployment
+- Amazon EKS Deployment
+- Prometheus Monitoring
+- Grafana Dashboards
+
+Full credit for the original frontend application goes to **Nikhil Manglik**.
+
+> **Disclaimer**
+>
+> This project is intended for educational and portfolio purposes only.
+> The application UI is based on an open-source project by Nikhil Manglik. The primary objective of this repository is to demonstrate a production-inspired DevSecOps, GitOps, Kubernetes, and Monitoring workflow.
+
+# ⭐ If you found this project useful
+
+Please consider giving this repository a ⭐ on GitHub.
