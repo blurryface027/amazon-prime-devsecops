@@ -104,6 +104,35 @@ pipeline {
                 }
             }
         }
+
+        stage('Update GitOps Repository') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-cred',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_TOKEN'
+                )]) {
+                    sh """
+                        rm -rf prime-video-gitops
+
+                        git clone https://\$GIT_USER:\$GIT_TOKEN@github.com/blurryface027/prime-video-gitops.git
+
+                        cd prime-video-gitops
+
+                        sed -i 's/tag:.*/tag: "${IMAGE_TAG}"/' prime-video-chart/values.yaml
+
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@local"
+
+                        git add .
+
+                        git diff --cached --quiet || git commit -m "Update image tag to ${IMAGE_TAG}"
+
+                        git push origin main
+                    """
+                }
+            }
+        }
     }
 
     post {
